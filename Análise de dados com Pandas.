@@ -1,0 +1,11 @@
+import pandas as pd
+
+# Substitua 'caminho/do/arquivo/gas_prices.csv' pelo caminho onde você salvou o arquivo CSV baixado
+caminho_do_arquivo = r'caminho/completo/do/arquivo/gas_prices.csv'
+# Carregar o arquivo CSV em um DataFrame
+data = pd.read_csv('./Pandas/archive.zip') 
+
+# Carregamento de datasets do exercicio de Pandas.
+data = pd.read_csv('./Pandas/archive.zip',sep = ';' ) 
+
+data.head(5)
