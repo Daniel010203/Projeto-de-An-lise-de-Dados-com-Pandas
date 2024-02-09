@@ -9,3 +9,72 @@ data = pd.read_csv('./Pandas/archive.zip')
 data = pd.read_csv('./Pandas/archive.zip',sep = ';' ) 
 
 data.head(5)
+
+
+ANALISANDO DADOS COM O CÓDIGO ABAIXO:
+import pandas as pd
+
+# Substitua 'caminho/do/arquivo/gas_prices.csv' pelo caminho onde você salvou o arquivo CSV baixado
+caminho_do_arquivo = r'caminho/completo/do/arquivo/gas_prices.csv'
+# Carregar o arquivo CSV em um DataFrame
+data = pd.read_csv('./Pandas/archive.zip') 
+EXPLICAÇÃO DO CÓDIGO EM PANDAS:
+
+# Carregamento de datasets do exercicio de Pandas.
+data = pd.read_csv('./Pandas/archive.zip',sep = ';' ) 
+EXPLICAÇÃO DO CÓDIGO EM PANDAS:
+
+data.head(5)
+EXPLICAÇÃO DO CÓDIGO EM PANDAS COM EXEMPLO SIMPLES:
+
+data.info()
+EXPLICAÇÃO DO CÓDIGO EM PANDAS COM EXEMPLO SIMPLES:
+
+type(data)
+EXPLICAÇÃO DO CÓDIGO EM PANDAS COM EXEMPLO SIMPLES:
+
+data.shape
+EXPLICAÇÃO DO CÓDIGO EM PANDAS COM EXEMPLO SIMPLES:
+
+
+import pandas as pd
+
+personagens_df = pd.DataFrame({
+    'nome': ['Luke', 'Yoda', 'Palpatine'],
+    'idade': [16, 900, 80],
+    'peso': [70, 15.2, 60],
+    'eh_jedi': [True, True, False]
+})
+
+EXPLICAÇÃO DO CÓDIGO EM PANDAS COM EXEMPLO SIMPLES:
+
+personagens_df.info()
+EXPLICAÇÃO DO CÓDIGO EM PANDAS COM EXEMPLO SIMPLES:
+
+personagens_df.columns
+EXPLICAÇÃO DO CÓDIGO EM PANDAS COM EXEMPLO SIMPLES:
+
+type(personagens_df.columns)
+EXPLICAÇÃO DO CÓDIGO EM PANDAS COM EXEMPLO SIMPLES:
+
+list(personagens_df.columns)
+EXPLICAÇÃO DO CÓDIGO EM PANDAS COM EXEMPLO SIMPLES:
+
+personagens_df.rename()
+EXPLICAÇÃO DO CÓDIGO EM PANDAS COM EXEMPLO SIMPLES:
+
+personagens_df_renomeado = personagens_df.rename(columns={
+    'nome': 'Nome Completo',  # renomeia a coluna de nome 'nome' para 'Nome Completo'
+    'idade': 'Idade'
+})
+EXPLICAÇÃO DO CÓDIGO EM PANDAS COM EXEMPLO SIMPLES:
+
+personagens_df_renomeado
+EXPLICAÇÃO DO CÓDIGO EM PANDAS COM EXEMPLO SIMPLES:
+
+personagens_df.rename(columns={'nome': 'Nome Completo','idade': 'Idade'}, inplace=True)
+EXPLICAÇÃO DO CÓDIGO EM PANDAS COM EXEMPLO SIMPLES:
+
+personagens_df
+EXPLICAÇÃO DO CÓDIGO EM PANDAS COM EXEMPLO SIMPLES:
+
