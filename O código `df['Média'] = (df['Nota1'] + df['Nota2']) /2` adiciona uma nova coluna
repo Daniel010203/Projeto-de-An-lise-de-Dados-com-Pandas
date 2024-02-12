@@ -1,0 +1,11 @@
+O código `df['Média'] = (df['Nota1'] + df['Nota2']) / 2` adiciona uma nova coluna chamada 'Média' ao DataFrame `df`, que contém a média das notas das duas colunas 'Nota1' e 'Nota2' para cada aluno. Aqui está a explicação detalhada:
+
+1. `df['Média']`: Isso cria uma nova coluna no DataFrame `df` chamada 'Média'. Se a coluna 'Média' não existir, ela será criada. Se já existir, seus valores serão substituídos pelos novos valores calculados.
+
+2. `(df['Nota1'] + df['Nota2'])`: Isso calcula a soma das notas da coluna 'Nota1' e da coluna 'Nota2' para cada linha do DataFrame. Como `df['Nota1']` e `df['Nota2']` são Series do Pandas, a operação de adição é aplicada elemento por elemento.
+
+3. `/ 2`: Após calcular a soma das notas, o resultado é dividido por 2 para encontrar a média das notas.
+
+4. Os resultados dessa operação são atribuídos à nova coluna 'Média' no DataFrame `df`, onde cada valor na coluna 'Média' corresponde à média das notas das respectivas linhas.
+
+Este código é útil para calcular e adicionar novas informações derivadas com base nos dados existentes em um DataFrame do Pandas.
