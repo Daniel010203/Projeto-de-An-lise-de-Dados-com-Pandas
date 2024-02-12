@@ -1,0 +1,9 @@
+O código `df = pd.DataFrame(dados_alunos)` cria um DataFrame do Pandas a partir do dicionário `dados_alunos`. Aqui está a explicação detalhada:
+
+1. `pd.DataFrame()`: Esta é uma função do Pandas que cria um DataFrame a partir dos dados fornecidos.
+
+2. `dados_alunos`: É o dicionário contendo os dados dos alunos, com as chaves sendo os nomes das colunas e os valores sendo listas correspondentes aos dados de cada coluna.
+
+3. `df = ...`: Isso atribui o DataFrame recém-criado à variável `df`, permitindo que você faça referência a ele posteriormente em seu código.
+
+Essencialmente, esse trecho de código transforma o dicionário `dados_alunos` em um DataFrame do Pandas, o que torna mais conveniente trabalhar com os dados em uma estrutura tabular para análise e manipulação posterior.
