@@ -1,0 +1,32 @@
+O código acima cria um dicionário chamado `dados_alunos` que contém informações fictícias sobre alunos, incluindo seus nomes, idades e notas em duas disciplinas (Nota1 e Nota2). Em seguida, é fornecida a explicação do código em Pandas com um exemplo simples:
+
+```python
+import pandas as pd
+
+# Criando um DataFrame a partir do dicionário de dados
+df = pd.DataFrame(dados_alunos)
+
+# Exibindo o DataFrame
+print(df)
+```
+
+**Explicação:**
+
+1. `import pandas as pd`: Isso importa a biblioteca pandas e a renomeia como `pd`, que é uma convenção comum.
+   
+2. `df = pd.DataFrame(dados_alunos)`: Aqui, estamos criando um DataFrame do Pandas a partir do dicionário `dados_alunos`. Um DataFrame é uma estrutura de dados tabular bidimensional com rótulos de linha e coluna. Cada coluna no DataFrame corresponde a uma chave no dicionário e cada linha corresponde aos valores associados a essas chaves.
+
+3. `print(df)`: Isso imprime o DataFrame na saída padrão.
+
+O resultado seria algo como:
+
+```
+    Nome  Idade  Nota1  Nota2
+0   João     18    7.5    8.0
+1  Maria     19    8.0    7.5
+2  Pedro     20    6.5    8.5
+3    Ana     18    9.0    9.5
+4  Paula     21    7.0    7.5
+```
+
+Ele exibe os dados de cada aluno em um formato tabular, onde cada linha representa um aluno e cada coluna representa uma característica do aluno (nome, idade, Nota1 e Nota2).
