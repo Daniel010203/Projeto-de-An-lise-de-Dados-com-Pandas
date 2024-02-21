@@ -1,0 +1,532 @@
+Neste tutorial, vamos aprender o essencial da biblioteca Pandas para manipulação de dados.
+
+
+Creative Commons License
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+
+Pacotes usados neste Notebook
+# pacotes usados neste notebook
+import pandas as pd
+Manipulação de Dados com Pandas
+1. Manipulação Básica de Datasets
+Dataset: Gas Prices in Brazil: https://www.kaggle.com/matheusfreitag/gas-prices-in-brazil
+
+Este dataset contém os registros dos preços médios semanais dos combustíveis do Brasil entre os anos de 2004 e 2019.
+Cada amostra (registro/linha) consiste em um registro de preço aferido para um dado tipo de combustível em uma dada localidade do Brasil.
+Alguns dos principais atributos (colunas) do dataset são: 'ESTADO', 'PRODUTO', 'NÚMERO DE POSTOS PESQUISADOS', 'PREÇO MÉDIO REVENDA'.
+
+* O arquivo disponibilizado no Kaggle está no formato tsv. Embora o pandas consiga abrí-lo normalmente, convertemos tal arquivo para o formato CSV, que é um dos formatos mais utilizados, e mudamos seu separado para ';' apenas para mostrar algumas opções da função de carregamento.
+
+1.1. Importando o Dataset
+Para carregar um dataset no formato csv, basta utilizar a função read_csv do pandas. Por padrão, ela considera ',' como separador.
+
+ 
+ 
+O dataset não foi carregado corretamente pois o separador utilizado seu arquivo CSV era ';' e não a ','.
+Vamos então carregá-lo corretamente:
+
+ 
+ 
+1.2. Exibindo as primeiras linhas do Dataset
+A função .head() exibe as 5 primeiras linhas do dataset/tabela/Data Frame.
+
+ 
+ 
+1.3 Informações do Dataset e Elementos Chave
+1.3.1 Informações gerais sobre o Dataset
+ 
+A primeira coluna da tabela, chamada 'Unnamed: 0', parece não significar nada. Na verdade, ela parece ser os índices da tabela, que foram salvos como uma coluna.
+Veremos jajá como remover tal coluna.
+
+Outro ponto é que, aparentemente, nenhum atributo/coluna possui valores nulos (null), uma vez que o número de registros do dataframe e os números de valores non-null é de 106823.
+Mas, veremos que não é bem assim para esse caso.
+
+1.3.2 Data Frame
+Todo dataset carregado (dados estruturados) é um Data Frame: 'Tabela' bi-dimensional, de tamanho mutável, com dados potencialmente heterogêneos.
+
+ 
+Podemos acessar as dimensões do Data Frame (número de linhas x número de colunas) utilizando o atributo .shape do Data Frame.
+
+ 
+ 
+ 
+Criando um DataFrame
+Podemos criar um DataFrame a partir de um dicionário, onde cada chave possui uma lista de elementos de igual tamanho.
+As chaves representam as colunas e cada um dos valores de sua lista representa o valor da linha correspondente para aquela coluna.
+
+alunos_df = pd.DataFrame({
+    'nome': ['Luke Skywalker', 'Yoda', 'Palpatine'],
+    'idade': [16, 1000, 70],
+    'peso': [70, 15, 60],
+    'eh jedi': [True, True, False]  # o nome das colunas podem ter espaços
+})
+alunos_df
+VEJA MAIS
+Criando um Data Frame a partir de um dicionário: https://www.geeksforgeeks.org/how-to-create-dataframe-from-dictionary-in-python-pandas/
+
+Renomeando as colunas de um DataFrame
+===> O método DataFrame.columns retorna uma ";lista" com os nomes de todas as colunas do data frame.
+
+ 
+ 
+ 
+
+
+===> Para renomear colunas do data frame, utilize o método DataFrame.rename, que retorna uma cópia do data frame com as as colunas renomeadas:
+
+ 
+ 
+ 
+ 
+Para renomear o próprio data frame em questão, utilize o parâmetro inplace=True:
+
+ 
+ 
+
+
+===> Uma outra forma de renomear todas as listas de um data frame é passar uma lista com os novos nomes das colunas para o atributo DataFrame.columns:
+
+ 
+ 
+ 
+1.3.3 Series
+Array uni-dimensional com os dados e rótulos de um eixo.
+
+ 
+ 
+ 
+ 
+ 
+ 
+Criando uma Series
+Podemos criar um DataFrame a partir de uma lista de elementos.
+
+ 
+Podemos alterar o nome dos índices (veremos melhor jajá) e o nome da Series (o que ela representa):
+
+ 
+VEJA MAIS
+https://pandas.pydata.org/pandas-docs/stable/user_guide/dsintro.html
+
+1.3.4 Atribuindo Dados
+1.3.4.1 Atribuindo constantes
+ 
+ 
+ 
+ 
+ 
+ 
+1.3.4.2 Atribuindo listas ou series
+ 
+ 
+ 
+ 
+ 
+ 
+1.3.4.3 Criando novas colunas
+Para criar uma nova coluna em um data frame, basta atribuirmos uma lista/Series de valores a uma nova 'chave' do data frame.
+
+PS: A quantidade de valores da lista precisa ser igual ao número de linhas/registros do data frame.
+
+ 
+ 
+ 
+
+
+Outro exemplo:
+
+ 
+ 
+PS: Obviamente, a lógica correta em converter o preço dos combustíveis em reais para dólares não é considerar uma taxa de câmbio fixa, uma vez que cada preço foi aferido em um momento diferente.
+
+1.3.4 Índices
+Todo Data Frame possui índices, que não são considerado colunas da tabela. Tais índices são comumente númericos, de 0 a num_linhas-1, mas também podem ser textuais (rótulos/labels).
+
+ 
+ 
+Use list(data.index) ou data.index.to_list() para converter um RangeIndex para uma python list.
+
+Exemplo de Data Frame com Índices Textuais (labels)
+pesquisa_de_satisfacao = pd.DataFrame({
+    'bom': [50, 21, 100],
+    'ruim': [131, 2, 30],
+    'pessimo': [30, 20, 1]
+}, index=['XboxOne', 'Playstation4', 'Switch'])
+pesquisa_de_satisfacao.head()
+1.4 Selecionando uma ou mais amostras (Indexação)
+==> Index-based selection (seleção baseada em Índices)
+Mostrando linhas específicas de um DataFrame:
+
+iloc: seleciona elementos do Dataframe, baseado em seu índice (número) --> row-first, column-second
+
+Selecionando uma amostra/linha:
+
+ 
+ 
+Selecionando múltiplias amostras/linhas:
+
+ 
+ 
+ 
+ 
+ 
+# e assim por diante!
+==> Label-based selection (seleção baseadas em Rótulos)
+loc: seleciona elementos do Dataframe, baseado em seus rótulos --> row-first, column-second
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+1.5 Selecionando um ou mais atributos (colunas)
+ 
+ 
+ 
+ 
+Como o rótulo da coluna 'DATA INICIAL' possui espaço, não é possível acessá-la como método: data.DATA INICIAL
+
+1.6 Removendo um Atributo (Coluna) do Data Frame
+Como vimos anteriormente, o atributo 'Unnamed: 0' parece ser um ruído em nosso dataset. Desta maneira, vamos eliminá-lo,
+
+ 
+ 
+ 
+1.7 Salvando um Data Frame
+Para salvarmos um Data Frame para um arquivo CSV, basta usarmos o método .to_csv.
+Por padrão, esse método salva os índices da tabela como uma coluna no CSV.
+Como no geral tais índices são números de 0 a n-1, não há necessidade para isso (veja que removemos anteriormente a coluna 'Unnamed: 0' que foi justamente esse caso).
+Desta forma, utilize o parâmetro: index=False.
+
+Por padrão, o método utilizará a ',' como separador das colunas. Caso queira alterá-lo, utilize o parâmetro sep.
+
+ 
+1.8 Seleção Condicional: Filtrando amostras
+Durante nossas análise exploratórias, frequentemente filtraremos nossas amostras, a partir de certas condições, para fins de análise mais específica.
+Existem algumas maneiras de fazermos tal filtragem. Antes disso, vamos carregar nosso dataset pré-processado que salvamos no item anterior.
+
+ 
+ 
+ 
+Selecionando apenas os preços dos Postos de São Paulo
+==> Alternativa 1: Seleção Condicional (Comparações diretas)
+O código abaixo retorna uma Series ('array') de booleans, com o número de linhas (amostras) do Data Frame, que informa os registros de preços dos postos do estado de São Paulo (True).
+
+ 
+ 
+ 
+ 
+ 
+ 
+Para filtrarmos os registros de postos do estado de São Paulo:
+
+ 
+O resultado é um Data Frame com apenas os registros desejados após a filtragem.
+Podemos ainda utilizar o método loc para o mesmo fim:
+
+ 
+==> Alternativa 2: Utilizando o método query
+query filtra linhas de um DataFrame baseado em uma query (pergunta).
+
+ 
+
+
+Uma boa prática é salvar o Data Frame filtrado em uma nova variável. Isso simplifica a complexidade do código para futuras análise feita para os postos de São Paulo.
+
+ 
+ 
+ 
+ 
+Selecionando registros de postos do Rio de Janeiro com Preços acima de 2 reais
+ 
+Note que o resultado da seleção continua sendo uma Series de booleans com o mesmo número de linhas/amostras do DataFrame, de modo que cada linha possuirá um valor booleano indicando se o posto é do Rio de Janeiro e o preço aferido do combustível é maior que 2 reais (True) ou não.
+
+O símbolo & significa AND na comparação. Essa nomenclatura do python/pandas é diferente das nomenclaturas tradicionais (&&).
+Similarmente:
+
+| representa o OR (não é ||)
+~ representa o NOT (não é !)
+ 
+Alternativamente, poderíamos usar o método query para fazermos tal seleção. Porém, isso não é possível especificamente para esse caso, pois o rótulo da coluna 'PREÇO MÉDIO REVENDA' possui caracteres inválidos para o método (cedilha, acentos)
+
+# Não funciona
+# data.query('ESTADO=="RIO DE JANEIRO" and PREÇO MÉDIO REVENDA > 2')
+Aprofundando mais ainda
+
+A primeira comparação (data['ESTADO'] == 'RIO DE JANEIRO') checa, linha a linha (amostra a amostra) do DataFrame, quais são aquelas cujo o estado é RIO DE JANEIRO. Nenhuma averiguação de preços é feita nesse momento. Como resultado, temos uma Series de booleans que responde apenas a essa "pergunta" feita.
+
+A segunda comparação (data['PREÇO MÉDIO REVENDA'] > 2) checa, linha a linha (amostra a amostra) do DataFrame, quais são os registro cujo preço do combustível é maior que 2 reais. Note que essa comparação checará os postos de TODOS os estados. Como resultado, temos uma Series de booleans que responde apenas a essa "pergunta" feita.
+
+Por fim, as duas "perguntas" são unidas pelo AND (&) que retorna a "pergunta completa" que fizemos.
+
+Alguns podem argumentar que tal abordagem é ineficiente, uma vez que, para cada condição ("pergunta"), estamos varrendo todas as linhas do DataFrame.
+O Pandas tenta otimizar isso ao máximo por de trás dos panos. Mas, de fato, de tivermos um dataset muito grande (centenas de milhares de linhas), tal abordagem se tornará lenta.
+
+Assim, poderíamos fazer filtragem com múltiplos condicionais em partes:
+
+ 
+ 
+Selecionando registros de postos de São Paulo ou do Rio de Janeiro com Gasolina Comum acima de 2 reais
+Podemos fazer a solução do "jeito mais lento", percorrendo o DataFrame inteiro múltiplas vezes:
+
+ 
+ 
+ 
+
+
+Alternativamente:
+
+ 
+ 
+ 
+Selecionando registros dos anos de 2008, 2010 e 2012
+ 
+ALTERNATIVA 1
+
+ 
+ALTERNATIVA 2
+
+ 
+Iterando com DataFrames
+For-each DataFrame.iterrows() (LENTO ==> apenas indicado para iterar pequenos conjunto de dados)
+ 
+2. Preparação dos dados
+2.1 Removendo amostras com valores vazios (null / nan) no dataset
+ 
+De um total de 106823 observações, não há valores null / nan para nenhum atributo. Mas, veremos que não é bem assim neste caso específico.
+
+
+2.2 Conversão de tipos de atributos
+O pandas automaticamente reconhece os tipos de dados de cada coluna.
+Porém, existem alguns atributos que estão com seus tipos errados: P. ex., "PREÇO MÉDIO DISTRIBUIÇÃO" deveria ser float64 e não object.
+Nestes casos, muito provavelmente algumas amostras têm um string ao invés de um número para tais atributos.
+
+Os atributos "DATA INICIAL" e "DATA FINAL" deveriam ser do tipo datetime.
+
+Em outros casos, alguns atributos categóricos são objects, mas poderiam ter o tipo category, que é um tipo especial do pandas.
+Este tipo é necessário para se utilizar algumas funções específicas do pandas.
+Não converteremos para este tipo por ora.
+
+ 
+Datas
+Como os atributos de data do datset já estão em um formato de data aceitável (YYYY-MM-DD), não precisamos forçar nenhuma conversão nesse sentido.
+
+ 
+ 
+Dados Numéricos
+ 
+ 
+
+
+Note que temos vários valores null agora **após a *conversão de tipos***. Vamos checá-los com mais cuidado nos dados originais e preprocessados.
+
+2.3 Limpeza de dados
+ 
+ 
+ 
+Várias amostras possuem a string '-' em algumas colunas ao invés de um número de fato. Ou seja, não há aferições destes atributos para estas amostras.
+
+
+
+Poderíamos preencher os valores NaN com um valor padrão. Para isso, basta usar o método .fillna.
+
+ 
+ 
+ 
+ 
+ 
+
+
+Por mais que a função fillna seja interessante e útil em muitos casos, no problema em questão estamos interessados em analisar precisamente, p. ex., o 'PREÇO MÉDIO DISTRIBUIÇÃO'.
+A fim de não termos valores sintéticos gerados pelo fillna, que possam atrapalhar nossa análise, iremos remover (drop) todas as amostras que possuem qualquer valor NaN para quaisquer atributos/colunas.
+
+Para isso, basta utilizarmos o método dropna.
+
+ 
+ 
+Nosso data frame agora, após essa limpeza, ficou mais enxuto, contentdo 103392 registros frente aos 106823 registros originais.
+
+Essas são apenas algumas das possíveis técnicas de limpeza de dados. Outras estratégias, p. ex., confiam na detecção de outliers, que não veremos neste curso.
+
+Salvando o Dataset Preprocessado
+ 
+3. Estatísticas Descritivas
+O Pandas fornecem algumas funções/métodos ue computam certas estatísticas descritivas.
+
+describe: exibe várias estatísticas descritivas para os atributos de um dataframe ou para uma Series.
+
+ 
+ 
+
+
+Como o resultado do describe de um dataframe é outro dataframe, podemos filtrar apenas algumas colunas.
+
+ 
+ 
+ 
+Acessando apenas algumas estatísticas
+
+ 
+ 
+
+
+mean, std, min, etc: cada uma das estatísticas do describe podem ser computadas individualmente:
+
+ 
+Qual é o menor preço mínimo de revenda?
+ 
+Qual é a média e desvio padrão dos preços mínimos de revenda?
+ 
+Quais são os estados considerados?
+ 
+ 
+Quantos registros (aferições) cada estado possui?
+.value_counts(): Conta a frequência dos valores de uma dada variável (de preferência, categórica).
+
+ 
+ 
+4. Executando funções para cada item de um DataFrame ou Series
+Uma alternativa ao for-loop que vimos anteriormente e que é lento, é usarmos funções próprias do pandas que aplicam/mapeiam uma dada função a todos os elementos de um DataFrame ou Series, retornando novos elementos "transformados".
+
+
+Fonte: https://towardsdatascience.com/introduction-to-pandas-apply-applymap-and-map-5d3e044e93ff
+
+df = pd.DataFrame({ 'A': [1, 2, 3, 4], 
+                    'B': [10, 20, 30, 40],
+                    'C': [100, 200, 300, 400]}, 
+                     index=['Linha 1', 'Linha 2', 'Linha 3', 'Linha 4'])
+df
+apply(): usado para aplicar uma função ao longo de um eixo de um DataFrame ou em valores de uma Series.
+
+
+Fonte: https://www.allthesnippets.com/browse/pandas/df_axis.html
+
+ 
+ 
+
+ 
+
+Usando lambda functions
+ 
+ 
+
+ 
+
+
+applymap(): usado para aplicar uma função para cada elemento (element-wise) de um DataFrame.
+
+df = pd.DataFrame({ 'A': [1, 2, 3, 4], 
+                    'B': [10, 20, 30, 40],
+                    'C': [100, 200, 300, 400]}, 
+                     index=['Linha 1', 'Linha 2', 'Linha 3', 'Linha 4'])
+df
+ 
+
+
+map(): usado para aplicar uma função para cada elemento (element-wise) de uma Series.
+
+ 
+ 
+ 
+ 
+5. Agrupamento
+groupby: Usado para criar grupo de elementos (e.x., baseado nos valores de um atributo).
+Funções podem então ser aplicadas para os elementos de cada grupo, de modo que os resultados de cada grupo são combinados.
+
+ 
+ 
+ 
+ 
+
+
+Também podemos ter agrupamentos por mais de um atributo.
+
+ 
+ 
+ 
+ 
+ 
+
+
+.agg: agrega (roda) uma série de funções para os elementos de um dataframe ou de grupos de um dataframe.
+
+df = pd.DataFrame([[1, 2, 3],
+                   [4, 5, 6],
+                   [7, 8, 9],
+                   [np.nan, np.nan, np.nan]],
+                  columns=['A', 'B', 'C'])
+df
+ 
+ 
+6. Ordenação
+notas = pd.DataFrame({
+    'nome': ['João', 'Maria', 'José', 'Alice'],
+    'idade': [20, 21, 19, 20],
+    'nota_final': [5.0, 10.0, 6.0, 10.0]
+})
+notas
+.sort_values(): ordena valores ao longo de um eixo.
+
+ 
+Por padrão, o método retorna uma cópia dos dados ordenados em ordem crescente (ascendente). Podemos alterar isso pelo argumento ascending.
+
+ 
+
+
+Podemos ordenar a partir de mais de uma coluna:
+
+ 
+Ordena os registros, primeiramente, pela coluna 'nota_final' em ordem descrente.
+Então, reordena os registros "empatados", ou seja, com a mesma nota final, em ordem alfabética (ordem crescente).
+
+
+
+Note que o dataframe original não foi alterado após a ordenação.
+
+ 
+Para alterá-lo, use o argumento inplace=True:
+
+ 
+ 
+7. Exercícios
+Vamos aplicar os conceitos que vimos em alguns exercícios.
+Para isso, utilizaremos o dataset de preços de combustíveis no Brasil.
+
+Como há apenas medições de janeiro a junho para o ano de 2019, resolvemos remover os dados deste ano da análise.
+
+ 
+Note que temos um novo dataframe com 99739 linhas, mas com índices fora desse intervalo.
+Acontece que os registros mantiveram seus índices originais após a query.
+
+Para resetar os índices de 0 a num_linhas-1, basta usarmos o método .reset_index().
+
+ 
+Os índices agora foram resetados. Porém, os índices antigos se transformaram em uma nova coluna chamada 'index'.
+Para removê-la durante o reset, basta passarmos o argumento drop=True.
+
+ 
+ 
+7.1 Qual a proporção de postos pesquisados para cada combustível em cada região
+ 
+ 
+7.2 Como os preços da Gasolina Comum em São Paulo variaram em 2018?
+ 
+ 
+Estatísticas Descritivas
+ 
+ 
+7.3 Como os preços da Gasolina Comum e do Etanol em São Paulo variaram em 2018?
+ 
+ 
+ 
+ 
+ 
+8. Assuntos para continuar os estudos
+join
+concat
+plot
+data cleaning
